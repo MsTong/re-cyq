@@ -6,7 +6,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CSSSplitWebpackPlugin = require('css-split-webpack-plugin').default;
-
+const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const commonConfig = {
     module: {
         rules: [{
@@ -15,8 +15,12 @@ const commonConfig = {
             use: [{
                 loader:'babel-loader'
             }]
+        },
+        {
+            test: /\.css$/,
+            use: [MiniCssExtractPlugin.loader,'style-loader', 'css-loader', 'postcss-loader']
         },{
-            test: /\.less$/,
+            test: /\.scss$/,
             exclude: /node_modules/,
             use: ['style-loader',
                 {
@@ -24,11 +28,7 @@ const commonConfig = {
                     options: {
                         importLoaders: 2
                     }
-                }, 'less-loader', 'postcss-loader']
-        },
-        {
-            test: /\.css$/,
-            use: [MiniCssExtractPlugin.loader,'style-loader', 'css-loader', 'postcss-loader']
+                }, 'sass-loader']
         },{
             test: /\.(png||jpg||gif||jpeg)$/,
             use:[{
@@ -51,21 +51,20 @@ const commonConfig = {
         new CleanWebpackPlugin(),
         new MiniCssExtractPlugin({
             filename: '[name].chunk.css',
-
         }),
         new CSSSplitWebpackPlugin({
             size:4000,
             filename:'[name]-[part].[ext]',
             publicPath:"css"
-        })
+        }),
+        new ExtractTextPlugin("common.scss")
     ],
     output: {
         publicPath:"/",
         path:path.resolve(__dirname,'../dist')
     },
     resolve: {
-        extensions:['.js','.jsx','css','less'],
-        mainFiles:['index','view']
+        extensions:['.js','.jsx','css','less']
     }
 }
 module.exports = commonConfig;
