@@ -18,7 +18,8 @@ const commonConfig = {
         },
         {
             test: /\.css$/,
-            use: [MiniCssExtractPlugin.loader,'style-loader', 'css-loader', 'postcss-loader']
+            use: ['style-loader', 'css-loader', 'postcss-loader']
+            // use: [MiniCssExtractPlugin.loader,'style-loader', 'css-loader', 'postcss-loader']
         },{
             test: /\.scss$/,
             exclude: /node_modules/,
@@ -49,9 +50,9 @@ const commonConfig = {
             template:'src/index.html'
         }),
         new CleanWebpackPlugin(),
-        new MiniCssExtractPlugin({
-            filename: '[name].chunk.css',
-        }),
+        // new MiniCssExtractPlugin({
+        //     filename: '[name].chunk.css',
+        // }),
         new CSSSplitWebpackPlugin({
             size:4000,
             filename:'[name]-[part].[ext]',

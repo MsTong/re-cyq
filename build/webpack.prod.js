@@ -51,7 +51,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-
  
 module.exports = {
     mode: "production",  // 只要在生产模式下， 代码就会自动压缩，自动启用 tree shaking
